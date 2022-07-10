@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vue Sample</title>
+  </head>
+  <body>
+    <div id="app">
+      <my-component1></my-component1>
+      <my-component2></my-component2>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script type="text/javascript">
+      // 첫번째 컴포넌트 내용
+      var lc1 = {
+        template: '<div>첫번째 지역 컴포넌트: {{ lc1Data }}</div>',
+        data: function() {
+          return {
+            lc1Data: 100
+          }
+        }
+      };
+
+      // 2번째 컴포넌트 내용
+      var lc2 = {
+        template: '<div>첫번째 지역 컴포넌트: {{ lc2Data }}</div>',
+        data: function() {
+          return {
+            lc2Data: lc1.data.lc1Data
+          }
+        }
+      };
+
+      new Vue({
+        el: '#app',
+        components: {
+          'my-component1': lc1,
+          'my-component2': lc2
+        }
+      });
+    </script>
+  </body>
+</html>
