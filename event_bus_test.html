@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>eventbus 테스트</title>
+    <title>eventbus test</title>
   </head>
   <body>
     <div id="app">
       <aaa-component></aaa-component>
-      <bbb-component></bbb-component>
+      <bbb-component :key="cost"></bbb-component>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script type="text/javascript">
-      // 이벤트 버스를 위한 Vue 인스턴스
+      // Vue instance for event bus
       var eventBus = new Vue();
 
-      // 이벤트를 보내는 컴포넌트
+      // sender component
       Vue.component('aaa-component', {
-        template: '<div>하위 aaa 컴포넌트 영역입니다. <button v-on:click="showLog">show</button></div>',
+        template: '<div>in aaa-component. <button v-on:click="updateCost">update Cost</button></div>',
         methods: {
-          showLog: function() {
-            eventBus.$emit('triggerEventBus', 100);
+          updateCost: function() {
+            eventBus.$emit('updateCost', 100);
           }
         }
       });
 
-      // 이벤트를 받는 컴포넌트
+      // receiver component
       Vue.component('bbb-component', {
-        template: '<div>하위 bbb 컴포넌트 영역입니다. (cost: {{ cost }})</div>',
+        template: '<div>in bbb-component. (cost: {{ cost }})</div>',
         data: function() {
           return {
             cost: 0
           }
         },
         created: function() {
-          eventBus.$on('triggerEventBus', function(value) {
+          eventBus.$on('updateCost', function(value) {
             this.cost = value;
-            console.log("bbb는 이벤트를 전달받음. 전달받은 값 : ", value);
+            console.log("received event from aaa-component. the cost is : ", this.cost);
           })
         }
       });
