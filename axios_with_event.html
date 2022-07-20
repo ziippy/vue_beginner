@@ -8,7 +8,7 @@
 
     <div id="example">
       <p>
-        이름: <input type="text" v-model="name" v-on:keyup="search" placeholder="두글자 이상 입력하세요." />
+        이름: <input type="text" v-model="name" v-on:keyup.13="search" placeholder="두글자 이상 입력하세요." />
       </p>
       <table id="list">
         <thead>
@@ -53,14 +53,14 @@
         // },
         methods: {
           search: function(e) {
-            if (e.keyCode === 13) {     // 엔터키가 입력되었을 때만 처리
+            //if (e.keyCode === 13) {     // 엔터키가 입력되었을 때만 처리
               var val = e.target.value;
               if (val.length >= 2) {
                 this.fetchContacts();
               } else {
                 this.contactlist = [];
               }
-            }
+            //}
           },
           //fetchContacts: _.debounce(function() {
           fetchContacts: function() {
